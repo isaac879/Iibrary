@@ -10,6 +10,29 @@ Iibrary::Iibrary() {}
 //    _privateVar = i;
 //}
 
+void hsv2rgb(float h, float s, float v, RGB *rgb) {
+	float r, g, b; // 0.0-1.0
+
+	int hi = (int)(h / 60.0f) % 6;
+	float f = (h / 60.0f) - hi;
+	float p = v * (1.0f - s);
+	float q = v * (1.0f - s * f);
+	float t = v * (1.0f - s * (1.0f - f));
+
+	switch (hi) {
+	case 0: r = v, g = t, b = p; break;
+	case 1: r = q, g = v, b = p; break;
+	case 2: r = p, g = v, b = t; break;
+	case 3: r = p, g = q, b = v; break;
+	case 4: r = t, g = p, b = v; break;
+	case 5: r = v, g = p, b = q; break;
+	}
+
+	rgb->r = (unsigned char)(r * 255); // dst_r : 0-255
+	rgb->g = (unsigned char)(g * 255); // dst_r : 0-255
+	rgb->b = (unsigned char)(b * 255); // dst_r : 0-255
+}
+
 double mapNumber(double x, double in_min, double in_max, double out_min, double out_max) {//Remaps a number to a given range
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
